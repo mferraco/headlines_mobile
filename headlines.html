@@ -1,0 +1,194 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Headlines</title> 
+
+	<!-- links to stylesheets and javascript -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="headlines.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script type='text/javascript' src='headlines.js'></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js'></script>
+
+</head> 
+<body> 
+
+
+
+<!--  ----------------- INTRO PAGE ----------------- -->
+
+<div data-role="page" id="intro" data-theme="a">
+
+	<div data-role="header">
+		<h1 id = "home-head"></h1>
+	</div><!-- /header -->
+	
+	<div data-role="collapsible-set" >
+	
+		<div data-role="collapsible" id="nflcollapsible">
+			<h3>NFL</h3>
+			<div data-role="controlgroup" >
+				<a href="#allHeadlines" data-role="button" data-mini="true" onClick="getHeadlines('nfl')">All Headlines</a>
+				<a href="#teamPage" data-role="button" data-mini="true" onClick="listTeams('nfl')" data-transition="turn">By Team</a>
+			</div>
+		</div>
+			
+		<div data-role="collapsible" id="nbacollapsible" >
+			<h3>NBA</h3>
+			<div data-role="controlgroup" >
+				<a href="#allHeadlines" data-role="button" data-mini="true" onClick="getHeadlines('nba')">All Headlines</a>
+				<a href="#teamPage" data-role="button" data-mini="true" onClick="listTeams('nba')" data-transition="turn">By Team</a>
+			</div>
+		</div>
+		
+		<div data-role="collapsible" id="mlbcollapsible" >
+			<h3>MLB</h3>
+			<div data-role="controlgroup" >
+				<a href="#allHeadlines" data-role="button" data-mini="true" onClick="getHeadlines('mlb')">All Headlines</a>
+				<a href="#teamPage" data-role="button" data-mini="true" onClick="listTeams('mlb')" data-transition="turn">By Team</a>
+			</div>
+		</div>
+		
+		<div data-role="collapsible" id="nhlcollapsible">
+			<h3>NHL</h3>
+			<div data-role="controlgroup" >
+				<a href="#allHeadlines" data-role="button" data-mini="true" onClick="getHeadlines('nhl')">All Headlines</a>
+				<a href="#teamPage" data-role="button" data-mini="true" onClick="listTeams('nhl')" data-transition="turn">By Team</a>
+			</div>
+		</div>
+	
+	</div>
+	
+	
+	<div id = "footer">
+		<a href = "#customize" data-role="button" data-mini="true" >Customize</a>
+	</div>
+	
+	    <input type="text" name="name" id="basic" placeholder = "Enter Name..."  />
+		<a href = "#intro" id="login" data-role = "button" onclick="changeName($('#basic').val())">Log In</a>
+	
+</div>
+
+<!--  ----------------- INTRO PAGE ----------------- -->
+
+
+
+
+<!--  ----------------- CUSTOMIZE PAGE ----------------- -->
+
+<div data-role="page" id="customize" data-theme="a">
+
+<form action = "#intro" method="GET">
+		<fieldset data-role="controlgroup" data-mini="true" class="ui-corner-all ui-controlgroup ui-controlgroup-vertical ui-mini"><div role="heading" class="ui-controlgroup-label">Choose your favorite leagues!</div><div class="ui-controlgroup-controls">
+				
+				<div class="ui-checkbox"><input type="checkbox" name="nfl-check" id="checkbox-1a" class="custom"><label for="checkbox-1a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="checkbox-off" data-theme="c" data-mini="true" class="ui-btn ui-mini ui-btn-icon-left ui-corner-top ui-btn-hover-c ui-checkbox-off ui-btn-up-c">NFL</label></div>
+				
+
+				<div class="ui-checkbox"><input type="checkbox" name="nba-check" id="checkbox-2a" class="custom"><label for="checkbox-2a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="checkbox-off" data-theme="c" data-mini="true" class="ui-btn ui-mini ui-btn-icon-left ui-corner-top ui-btn-hover-c ui-checkbox-off ui-btn-up-c">NBA</label></div>
+				
+
+				<div class="ui-checkbox"><input type="checkbox" name="mlb-check" id="checkbox-3a" class="custom"><label for="checkbox-3a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="checkbox-off" data-theme="c" data-mini="true" class="ui-btn ui-mini ui-btn-icon-left ui-corner-top ui-btn-hover-c ui-checkbox-off ui-btn-up-c">MLB</label></div>
+				
+
+				<div class="ui-checkbox"><input type="checkbox" name="nhl-check" id="checkbox-4a" class="custom"><label for="checkbox-4a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="checkbox-off" data-theme="c" data-mini="true" class="ui-btn ui-mini ui-btn-icon-left ui-corner-top ui-btn-hover-c ui-checkbox-off ui-btn-up-c">NHL</label></div>
+				
+		    </div></fieldset>
+			<button type="submit" data-theme="a" data-mini="true" class="ui-btn-hidden" aria-disabled="false" >Submit</button>
+	</form>
+	
+</div>
+<!--  ----------------- CUSTOMIZE PAGE ----------------- -->
+
+
+
+
+<!--  ----------------- ALL HEADLINES ----------------- -->
+
+<div data-role = "page" id = "allHeadlines" data-theme="a">
+	<div data-role="header">
+		<h1 id = "all-head"></h1>
+	</div>
+	
+	<div data-role="header"> 
+		<h4><a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Quick Links</a>
+			
+		<div data-role="popup" id="popupPanel" data-corners="false" data-theme="none" data-shadow="false" data-tolerance="0,0">
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nfl')">NFL</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nba')">NBA</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('mlb')">MLB</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nhl')">NHL</a>
+			<a href = "#intro" data-role="button" data-icon="home" data-mini="true" onClick="getHeadlines('nhl')">Home</a>
+		</div></h4>
+	</div> 
+	
+	<ul data-role="listview" id = "headlines">
+	</ul>
+	
+</div>
+
+<!--  ----------------- ALL HEADLINES ----------------- -->
+
+
+
+
+<!--  ----------------- TEAM LIST ----------------- -->
+
+<div data-role = "page" id = "teamPage" data-theme="a">
+	<div data-role="header">
+		<h1 id = "team-list-head"></h1>
+	</div>
+	
+	<div data-role="header"> 
+		<h4><a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Quick Links</a>
+			
+		<div data-role="popup" id="popupPanel" data-corners="false" data-theme="none" data-shadow="false" data-tolerance="0,0">
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nfl')">NFL</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nba')">NBA</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('mlb')">MLB</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nhl')">NHL</a>
+			<a href = "#intro" data-role="button" data-icon="home" data-mini="true" onClick="getHeadlines('nhl')">Home</a>
+		</div></h4>
+	</div> 
+	
+	<ul data-role="listview" id = "teamList" >
+	</ul>
+	
+</div>
+
+
+<!--  ----------------- TEAM LIST ----------------- -->
+
+
+
+
+<!--  ----------------- TEAM HEADLINES ----------------- -->
+
+<div data-role = "page" id = "teamHeadlinesPage" data-theme="a">
+	<div data-role="header">
+		<h1 id = "team-head"></h1>
+	</div>
+	
+	<div data-role="header"> 
+		<h4><a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Quick Links</a>
+			
+		<div data-role="popup" id="popupPanel" data-corners="false" data-theme="none" data-shadow="false" data-tolerance="0,0">
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nfl')">NFL</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nba')">NBA</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('mlb')">MLB</a>
+			<a href = "#allHeadlines" data-role="button" data-icon="arrow-l" data-mini="true" onClick="getHeadlines('nhl')">NHL</a>
+			<a href = "#intro" data-role="button" data-icon="home" data-mini="true">Home</a>
+		</div></h4>
+	</div> 
+	
+	<ul data-role="listview" id = "teamHeadlines" >
+	</ul>
+	
+</div>
+
+<!--  ----------------- TEAM HEADLINES ----------------- -->
+
+
+</body>
+</html>
